@@ -3,11 +3,15 @@ use strict;
 use warnings FATAL => 'all';
 our $VERSION = '0.01';
 
+use base 'DBIx::XHTML_Table';
+
 1;
 __END__
 =head1 NAME
 
 DBIx::HTML - SQL queries to HTML tables.
+
+This is a renaming of DBIx::XHTML_Table.
 
 =head1 SYNOPSIS
 

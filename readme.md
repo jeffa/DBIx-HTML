@@ -1,50 +1,42 @@
 DBIx-HTML
+=========
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+Rename of DBIx::XHTML_Table.
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
-
-
-INSTALLATION
-
+Installation
+------------
 To install this module, run the following commands:
+```
+perl Makefile.PL
+make
+make test
+make install
+```
 
-	perl Makefile.PL
-	make
-	make test
-	make install
-
-SUPPORT AND DOCUMENTATION
-
+Support and Documentation
+-------------------------
 After installing, you can find documentation for this module with the
 perldoc command.
-
-    perldoc DBIx::HTML
+```
+perldoc DBIx::HTML
+```
 
 You can also look for information at:
 
-    RT, CPAN's request tracker (report bugs here)
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-HTML
+* RT, CPAN's request tracker (report bugs here)
+    http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-HTML
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/DBIx-HTML
+* AnnoCPAN, Annotated CPAN documentation
+    http://annocpan.org/dist/DBIx-HTML
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/DBIx-HTML
+* CPAN Ratings
+    http://cpanratings.perl.org/d/DBIx-HTML
 
-    Search CPAN
-        http://search.cpan.org/dist/DBIx-HTML/
+* Search CPAN
+    http://search.cpan.org/dist/DBIx-HTML/
 
-
-LICENSE AND COPYRIGHT
-
+License and Copyright
+---------------------
 Copyright (C) 2015 Jeff Anderson
 
 This program is free software; you can redistribute it and/or modify it
@@ -82,4 +74,3 @@ YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
 CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
 CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

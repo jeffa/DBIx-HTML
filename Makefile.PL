@@ -16,11 +16,9 @@ WriteMakefile(
     },
     BUILD_REQUIRES => {
         'Test::More' => 0,
+        #'DBIx::XHTML_Table' => 0,
     },
-    PREREQ_PM => {
-        #'ABC'              => 1.6,
-        #'Foo::Bar::Module' => 5.0401,
-    },
+    PREREQ_PM => { },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'DBIx-HTML-*' },
 );
