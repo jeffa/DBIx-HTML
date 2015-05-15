@@ -5,25 +5,53 @@ our $VERSION = '0.01';
 
 use base 'DBIx::XHTML_Table';
 
+sub execute  { shift->exec_query( @_ ) }
+sub generate { shift->output( @_ ) }
+
 1;
 __END__
 =head1 NAME
 
 DBIx::HTML - SQL queries to HTML tables.
 
-This is a renaming of DBIx::XHTML_Table.
+This is a renaming of DBIx::XHTML_Table. See L<DBIx::XHTML_Table> for more information.
 
 =head1 SYNOPSIS
 
-  use DBIx::HTML;
+    use DBIx::HTML;
 
-  my $table = DBIx::HTML->new();
+    # database credentials - fill in the blanks
+    my @creds = ( $data_source, $usr, $pass );
+
+    my $table = DBIx::HTML->new( @creds )
+
+    $table->execute("
+        select foo from bar
+        where baz='qux'
+        order by foo
+    ");
+
+    print $table->generate;
+
+    # stackable method calls:
+    print DBIx::HTML
+        ->new( @creds )
+        ->execute('select foo,baz from bar')
+        ->generate;
 
 =head1 METHODS
 
 =over 4
 
 =item new
+
+=item execute
+
+Alias for DBIx::XHTML_Table::exec_query()
+
+=item generate
+
+Alias for DBIx::XHTML_Table::output()
 
 =back
 
@@ -34,8 +62,11 @@ Jeff Anderson, C<< <jeffa at cpan.org> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to C<bug-dbix-html at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-HTML>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+the web interface at
+
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-HTML>.
+
+I will be notified, and then you'll automatically be notified of progress on your bug as I make changes.
 
 =head1 SUPPORT
 

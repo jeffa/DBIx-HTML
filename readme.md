@@ -1,7 +1,14 @@
 DBIx-HTML
 =========
 
-Rename of DBIx::XHTML_Table.
+Rename of [DBIx::XHTML_Table](http://search.cpan.org/dist/DBIx-XHTML_Table/).
+
+This will be the future home of DBIx::XHTML_Table and as of now this 
+module (DBIx::HTML) is merely a subclass of DBIx::XHMTL_Table. That 
+means that the output will contain XHTML elements. Work will be done
+to ensure that this module only emits XHTML if requested, while the
+original DBIx::XHTML_Table will continue to work as specified.
+Any methods that appear to have been renamed are clones. 
 
 Installation
 ------------
@@ -11,6 +18,31 @@ perl Makefile.PL
 make
 make test
 make install
+```
+
+Synopsis
+--------
+```perl
+use DBIx::HTML;
+
+# database credentials - fill in the blanks
+my @creds = ( $data_source, $usr, $pass );
+
+my $table = DBIx::HTML->new( @creds )
+
+$table->execute("
+    select foo from bar
+    where baz='qux'
+    order by foo
+");
+
+print $table->generate;
+
+# stackable method calls:
+print DBIx::HTML
+    ->new( @creds )
+    ->execute('select foo,baz from bar')
+    ->generate;
 ```
 
 Support and Documentation
@@ -23,17 +55,13 @@ perldoc DBIx::HTML
 
 You can also look for information at:
 
-* RT, CPAN's request tracker (report bugs here)
-    http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-HTML
+* [RT, CPAN's request tracker](http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-HTML) (report bugs here)
 
-* AnnoCPAN, Annotated CPAN documentation
-    http://annocpan.org/dist/DBIx-HTML
+* [AnnoCPAN](http://annocpan.org/dist/DBIx-HTML) - annotated CPAN documentation
 
-* CPAN Ratings
-    http://cpanratings.perl.org/d/DBIx-HTML
+* [CPAN Ratings](http://cpanratings.perl.org/d/DBIx-HTML)
 
-* Search CPAN
-    http://search.cpan.org/dist/DBIx-HTML/
+* [Search CPAN](http://search.cpan.org/dist/DBIx-HTML/)
 
 License and Copyright
 ---------------------
