@@ -1,53 +1,27 @@
 package DBIx::HTML;
-
-use 5.006;
 use strict;
 use warnings FATAL => 'all';
-
-=head1 NAME
-
-DBIx::HTML - The great new DBIx::HTML!
-
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
 our $VERSION = '0.01';
 
+1;
+__END__
+=head1 NAME
+
+DBIx::HTML - SQL queries to HTML tables.
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+  use DBIx::HTML;
 
-Perhaps a little code snippet.
+  my $table = DBIx::HTML->new();
 
-    use DBIx::HTML;
+=head1 METHODS
 
-    my $foo = DBIx::HTML->new();
-    ...
+=over 4
 
-=head1 EXPORT
+=item new
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
-=head1 SUBROUTINES/METHODS
-
-=head2 function1
-
-=cut
-
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
-}
+=back
 
 =head1 AUTHOR
 
@@ -59,15 +33,11 @@ Please report any bugs or feature requests to C<bug-dbix-html at rt.cpan.org>, o
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-HTML>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
-
-
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc DBIx::HTML
-
 
 You can also look for information at:
 
@@ -134,8 +104,3 @@ YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
 CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
 CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-=cut
-
-1; # End of DBIx::HTML
