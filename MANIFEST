@@ -5,7 +5,14 @@ Makefile.PL
 MANIFEST			This list of files
 readme.md
 t/00-install.t
-t/v1.40/bug-11666.t
-t/v1.40/bug-11681.t
-t/v1.40/bug-21761.t
-t/v1.40/v1.40.t
+t/DBIx-XHTML_Table-v1.40/00-run.t
+t/DBIx-XHTML_Table-v1.40/bug-11666.t
+t/DBIx-XHTML_Table-v1.40/bug-11681.t
+t/DBIx-XHTML_Table-v1.40/bug-21761.t
+t/Spreadsheet-HTML-v0.04/01-get-data.t
+t/Spreadsheet-HTML-v0.04/02-process-once.t
+t/Spreadsheet-HTML-v0.04/03-encode-data.t
+t/Spreadsheet-HTML-v0.04/04-padding.t
+t/Spreadsheet-HTML-v0.04/05-html.t
+t/Spreadsheet-HTML-v0.04/06-transpose.t
+t/Spreadsheet-HTML-v0.04/07-reverse.t

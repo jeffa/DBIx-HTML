@@ -1,13 +1,28 @@
+package DBIx::HTML::V1;
+use base 'DBIx::XHTML_Table', 'DBIx::HTML';
+
+package DBIx::HTML::V2;
+use base 'Spreadsheet::HTML', 'DBIx::HTML';
+
 package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
 our $VERSION = '0.02';
 
-use Spreadsheet::HTML;
-use base 'DBIx::XHTML_Table';
+use Data::Dumper;
 
-sub execute  { shift->exec_query( @_ ) }
-sub generate { shift->output( @_ ) }
+sub new {
+    my $class = shift;
+
+    if (!ref($_[0]) and $_[0] eq 'data') {
+        return DBIx::HTML::V2->new( @_ ); 
+    }
+    elsif (ref($_[0]) eq 'HASH' and exists $_[0]->{data}) {
+        return DBIx::HTML::V2->new( @_ ); 
+    }
+
+    return DBIx::HTML::V1->new( @_ ); 
+}
 
 1;
 __END__
@@ -70,18 +85,30 @@ Jeff Anderson, C<< <jeffa at cpan.org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-dbix-html at rt.cpan.org>, or through
-the web interface at
+Please report any bugs or feature requests to
 
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-HTML>.
+=over 4
 
-I will be notified, and then you'll automatically be notified of progress on your bug as I make changes.
+=item * C<bug-dbix-html at rt.cpan.org>
+
+    Send an email.
+
+=item * L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-HTML>
+
+    Use the web interface.
+
+=back
+
+I will be notified, and then you'll automatically be notified of progress
+on your bug as I make changes.
 
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc DBIx::HTML
+
+The Github project is L<https://github.com/jeffa/DBIx-HTML>
 
 You can also look for information at:
 
