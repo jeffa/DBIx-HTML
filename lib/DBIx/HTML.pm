@@ -7,7 +7,7 @@ use base 'Spreadsheet::HTML', 'DBIx::HTML';
 package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Data::Dumper;
 
