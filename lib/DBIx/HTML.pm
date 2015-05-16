@@ -3,6 +3,7 @@ use strict;
 use warnings FATAL => 'all';
 our $VERSION = '0.02';
 
+use Spreadsheet::HTML;
 use base 'DBIx::XHTML_Table';
 
 sub execute  { shift->exec_query( @_ ) }
@@ -14,7 +15,10 @@ __END__
 
 DBIx::HTML - SQL queries to HTML tables.
 
-This is a renaming of DBIx::XHTML_Table. See L<DBIx::XHTML_Table> for more information.
+This module is a bridge between the older DBIx::XHTML_Table
+and the newer Spreadsheet::HTML. 
+
+See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
 
 =head1 SYNOPSIS
 
@@ -22,7 +26,6 @@ This is a renaming of DBIx::XHTML_Table. See L<DBIx::XHTML_Table> for more infor
 
     # database credentials - fill in the blanks
     my @creds = ( $data_source, $usr, $pass );
-
     my $table = DBIx::HTML->new( @creds )
 
     $table->execute("
