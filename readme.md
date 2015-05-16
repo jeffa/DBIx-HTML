@@ -28,27 +28,37 @@ make install
 
 Synopsis
 --------
+New usage is currently limited. No database queries are executed
+on behalf of the client currently, but this will change. For now,
+focus is on allowing legacy usage to continue as-is.
+```perl
+my $table = DBIx::HTML->new( data => $data );
+print $table->generate;
+print $table->transpose;
+print $table->reverse;
+```
+
+DBIx::HTML should be a full replacement for DBIx::XHTML_Table.
 ```perl
 use DBIx::HTML;
 
 # database credentials - fill in the blanks
 my @creds = ( $data_source, $usr, $pass );
-
 my $table = DBIx::HTML->new( @creds )
 
-$table->execute("
+$table->exec_query("
     select foo from bar
     where baz='qux'
     order by foo
 ");
 
-print $table->generate;
+print $table->output;
 
 # stackable method calls:
 print DBIx::HTML
     ->new( @creds )
-    ->execute('select foo,baz from bar')
-    ->generate;
+    ->exec_query('select foo,baz from bar')
+    ->output;
 ```
 
 Support and Documentation

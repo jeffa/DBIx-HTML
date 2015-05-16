@@ -41,7 +41,20 @@ DBIx::XHTML_Table to remain available.
 
 See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
 
-=head1 SYNOPSIS
+=head1 NEW USAGE (Spreadsheet::HTML)
+
+New usage is currently limited. No database queries are executed
+on behalf of the client currently, but this will change. For now,
+focus is on allowing legacy usage to continue as-is.
+
+    my $table = DBIx::HTML->new( data => $data );
+    print $table->generate;
+    print $table->transpose;
+    print $table->reverse;
+
+=head1 LEGACY USAGE (DBIx::XHTML_Table)
+
+DBIx::HTML should be a full replacement for DBIx::XHTML_Table.
 
     use DBIx::HTML;
 
@@ -49,19 +62,19 @@ See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
     my @creds = ( $data_source, $usr, $pass );
     my $table = DBIx::HTML->new( @creds )
 
-    $table->execute("
+    $table->exec_query("
         select foo from bar
         where baz='qux'
         order by foo
     ");
 
-    print $table->generate;
+    print $table->output;
 
     # stackable method calls:
     print DBIx::HTML
         ->new( @creds )
-        ->execute('select foo,baz from bar')
-        ->generate;
+        ->exec_query('select foo,baz from bar')
+        ->output;
 
 =head1 METHODS
 
@@ -69,13 +82,12 @@ See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
 
 =item new
 
-=item execute
+If a hash or hash reference argument is present with
+a key of 'data' then new() will return a V2 object
+which is a subclass of Spreadsheet::HTML.
 
-Alias for DBIx::XHTML_Table::exec_query()
-
-=item generate
-
-Alias for DBIx::XHTML_Table::output()
+Otherwise, a V1 object will be returned, which is a 
+subclass of DBIx::XHTML_Table.
 
 =back
 
