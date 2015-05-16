@@ -1,11 +1,8 @@
 #!perl -T
 use strict;
 use warnings FATAL => 'all';
-use Test::More;
+use Test::More tests => 7;
 
-plan tests => 7;
-
-use lib 'lib';
 use_ok 'DBIx::HTML';
 
 my $attr = { no_indent => 1 };
