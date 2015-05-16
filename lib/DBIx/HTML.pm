@@ -15,8 +15,14 @@ __END__
 
 DBIx::HTML - SQL queries to HTML tables.
 
-This module is a bridge between the older DBIx::XHTML_Table
-and the newer Spreadsheet::HTML. 
+This module is an adapter between the older DBIx::XHTML_Table
+and the newer Spreadsheet::HTML. It will eventually only
+leverage the latter, essentially providing HTML output while
+allowing the former to continue to provide XHTML output.
+
+The goal is to slowly move usage away from DBIx::XHTML_Table
+and over to DBIx::HTML/Spreadsheet::HTML while allowing
+DBIx::XHTML_Table to remain available.
 
 See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
 
