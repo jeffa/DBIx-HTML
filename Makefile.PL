@@ -17,7 +17,6 @@ WriteMakefile(
     BUILD_REQUIRES => {
         'Test::More' => 0,
         'Spreadsheet::HTML' => '0.04',
-        'DBIx::XHTML_Table' => '1.39',
     },
     PREREQ_PM => { },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
