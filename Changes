@@ -1,5 +1,7 @@
 Revision history for DBIx-HTML
 
+0.05    
+
 0.04    fixed tardist manifest
 
 0.03    now stands alone (uses only DBI and Spreadsheet::HTML)
