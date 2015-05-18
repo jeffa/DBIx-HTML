@@ -1,28 +1,56 @@
-package DBIx::HTML::V1;
-use base 'DBIx::XHTML_Table', 'DBIx::HTML';
-
-package DBIx::HTML::V2;
-use base 'Spreadsheet::HTML', 'DBIx::HTML';
-
 package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
 our $VERSION = '0.03';
 
+use DBI;
+use Carp;
+use Spreadsheet::HTML;
 use Data::Dumper;
 
-sub new {
+sub connect {
     my $class = shift;
+    my $self = {};
 
-    if (!ref($_[0]) and $_[0] eq 'data') {
-        return DBIx::HTML::V2->new( @_ ); 
-    }
-    elsif (ref($_[0]) eq 'HASH' and exists $_[0]->{data}) {
-        return DBIx::HTML::V2->new( @_ ); 
+    if (UNIVERSAL::isa( $_[0], 'DBI::db' )) {
+        # use supplied db handle
+        $self->{dbh}        = $_[0];
+        $self->{keep_alive} = 1;
+    } else {
+        # create my own db handle
+        eval { $self->{dbh} = DBI->connect(@_) };
+        carp $@ and return undef if $@;
     }
 
-    return DBIx::HTML::V1->new( @_ ); 
+	return bless $self, $class;
 }
+
+sub do {
+    my $self = shift;
+    my ($sql, $args) = @_;
+
+    carp "can't call do(): no database handle" unless $self->{dbh};
+
+    #TODO: this seems like it can be simplified
+    eval {
+        $self->{sth} = UNIVERSAL::isa( $sql,'DBI::st' ) ? $sql : $self->{dbh}->prepare( $sql );
+        $self->{sth}->execute( @$args );
+    };
+    carp $@ and return undef if $@;
+
+    $self->{spreadsheet} = Spreadsheet::HTML->new(
+        data => [
+            [ map ucfirst $_, @{ $self->{sth}{NAME} } ],
+            @{ $self->{sth}->fetchall_arrayref },
+        ]
+    );
+
+    return $self;
+}
+
+sub generate { shift->{spreadsheet}->generate( @_ ) }
+
+
 
 1;
 __END__
@@ -30,64 +58,47 @@ __END__
 
 DBIx::HTML - SQL queries to HTML tables.
 
-This module is an adapter between the older DBIx::XHTML_Table
-and the newer Spreadsheet::HTML. It will eventually only
-leverage the latter, essentially providing HTML output while
-allowing the former to continue to provide XHTML output.
-
-The goal is to slowly move usage away from DBIx::XHTML_Table
-and over to DBIx::HTML/Spreadsheet::HTML while allowing
-DBIx::XHTML_Table to remain available.
-
-See L<DBIx::XHTML_Table> and L<Spreadsheet::HTML> for more information.
-
-=head1 NEW USAGE (Spreadsheet::HTML)
-
-New usage is currently limited. No database queries are executed
-on behalf of the client currently, but this will change. For now,
-focus is on allowing legacy usage to continue as-is.
-
-    my $table = DBIx::HTML->new( data => $data );
-    print $table->generate;
-    print $table->transpose;
-    print $table->reverse;
-
-=head1 LEGACY USAGE (DBIx::XHTML_Table)
-
-DBIx::HTML should be a full replacement for DBIx::XHTML_Table.
+=head1 USAGE
 
     use DBIx::HTML;
 
     # database credentials - fill in the blanks
     my @creds = ( $data_source, $usr, $pass );
-    my $table = DBIx::HTML->new( @creds )
+    my $table = DBIx::HTML->connect( @creds )
 
-    $table->exec_query("
+    $table->do('
         select foo from bar
-        where baz='qux'
+        where baz = ?
         order by foo
-    ");
+    ', [ 'qux' ]);
 
-    print $table->output;
+    print $table->generate;
 
     # stackable method calls:
     print DBIx::HTML
-        ->new( @creds )
-        ->exec_query('select foo,baz from bar')
-        ->output;
+        ->connect( @creds )
+        ->do( 'select foo,baz from bar' )
+        ->generate;
 
 =head1 METHODS
 
 =over 4
 
-=item new
+=item connect
 
-If a hash or hash reference argument is present with
-a key of 'data' then new() will return a V2 object
-which is a subclass of Spreadsheet::HTML.
+=item do
 
-Otherwise, a V1 object will be returned, which is a 
-subclass of DBIx::XHTML_Table.
+=item generate
+
+=back
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Spreadsheet::HTML>
+
+=item L<DBIx::XHTML_Table>
 
 =back
 
@@ -143,10 +154,6 @@ L<http://cpanratings.perl.org/d/DBIx-HTML>
 L<http://search.cpan.org/dist/DBIx-HTML/>
 
 =back
-
-
-=head1 ACKNOWLEDGEMENTS
-
 
 =head1 LICENSE AND COPYRIGHT
 
