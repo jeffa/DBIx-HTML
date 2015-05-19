@@ -60,7 +60,7 @@ sub decorate {
     my $self = shift;
     my %attrs = @_;
 
-    if (my $func = delete $attrs{map_headers}) {
+    if (my $func = delete $attrs{filter_header}) {
         $self->{head} = [ map $func->($_), @{ $self->{head} } ];
     }
 
