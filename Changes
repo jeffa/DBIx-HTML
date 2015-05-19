@@ -1,6 +1,6 @@
 Revision history for DBIx-HTML
 
-0.05    
+0.05    moving install test out of distro
 
 0.04    fixed tardist manifest
 
