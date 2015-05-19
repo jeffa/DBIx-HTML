@@ -1,6 +1,6 @@
 Revision history for DBIx-HTML
 
-0.06    
+0.06    fixed distro tests/manifest  
 
 0.05    moving install test out of distro
 
