@@ -38,18 +38,35 @@ sub do {
     };
     carp $@ and return undef if $@;
 
-    $self->{spreadsheet} = Spreadsheet::HTML->new(
-        data => [
-            [ map ucfirst $_, @{ $self->{sth}{NAME} } ],
-            @{ $self->{sth}->fetchall_arrayref },
-        ]
-    );
+    $self->{head} = $self->{sth}{NAME};
+    $self->{rows} = $self->{sth}->fetchall_arrayref;
 
     return $self;
 }
 
-sub generate { shift->{spreadsheet}->generate( @_ ) }
+sub generate {
+    my $self = shift;
+    return Spreadsheet::HTML
+        ->new( data => [ $self->{head}, @{ $self->{rows} } ] )
+        ->generate( @_ )
+    ;
+}
 
+sub decorate {
+    my $self = shift;
+
+}
+
+
+# disconnect database handle if i created it
+sub DESTROY {
+	my $self = shift;
+	unless ($self->{keep_alive}) {
+        if (UNIVERSAL::isa( $self->{dbh}, 'DBI::db' )) {
+            $self->{dbh}->disconnect();
+        }
+	}
+}
 
 
 1;
@@ -72,23 +89,36 @@ DBIx::HTML - SQL queries to HTML tables.
         order by foo
     ', [ 'qux' ]);
 
+    $table->decorate( table => { border => 1 } );
+
     print $table->generate;
 
     # stackable method calls:
     print DBIx::HTML
         ->connect( @creds )
         ->do( 'select foo,baz from bar' )
+        ->decorate( table => { border => 1 } )
         ->generate;
 
 =head1 METHODS
 
 =over 4
 
-=item connect
+=item connect()
 
-=item do
+Connects to the database. See L<DBI> for how to do that.
 
-=item generate
+=item do()
+
+Executes the query.
+
+=item decorate()
+
+Specify attributes for the HTML tags in the generated table.
+
+=item generate()
+
+Produce and return the HTML table.
 
 =back
 
