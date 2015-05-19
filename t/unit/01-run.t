@@ -12,20 +12,31 @@ plan skip_all => "DBD::CSV required" if $@;
 eval "use HTML::TableExtract";
 plan skip_all => "HTML::TableExtract required" if $@;
 
-plan tests => 12;
+plan tests => 14;
 
 my $nbsp = chr( 160 );
 
-my $dbh = DBI->connect ("dbi:CSV:", undef, undef, {
-    f_ext      => ".csv/r",
-    f_dir      => "t/data/",
-    RaiseError => 1,
-});
+my @dbi_csv_args = (
+    "dbi:CSV:", undef, undef, {
+        f_ext      => ".csv/r",
+        f_dir      => "t/data/",
+        RaiseError => 1,
+    }
+);
 
-my $table = DBIx::HTML->connect( $dbh );
-isa_ok $table, 'DBIx::HTML',            "object created";
-isa_ok $table->{dbh}, 'DBI::db',        "database handle copied";
+my ($dbh,$table);
+{
+    $dbh   = DBI->connect ( @dbi_csv_args );
+    $table = DBIx::HTML->connect( $dbh );
+    isa_ok $table, 'DBIx::HTML',            "object created";
+    isa_ok $table->{dbh}, 'DBI::db',        "database handle copied";
+    isa_ok $dbh, 'DBI::db',                 "database alive before object expires";
+}
 
+isa_ok $dbh, 'DBI::db', "database still alive before object expires";
+
+$dbh   = DBI->connect ( @dbi_csv_args );
+$table = DBIx::HTML->connect( $dbh );
 is output( 'select * from test' ),
     '<table><tr><th>id</th><th>parent</th><th>name</th><th>description</th></tr><tr><td>1</td><td>&nbsp;</td><td>root</td><td>the root</td></tr><tr><td>2</td><td>1</td><td>kid1</td><td>some kid</td></tr><tr><td>3</td><td>1</td><td>kid2</td><td>some other kid</td></tr><tr><td>4</td><td>2</td><td>grandkid1</td><td>a grandkid</td></tr><tr><td>5</td><td>3</td><td>grandkid2</td><td>another grandkid</td></tr><tr><td>6</td><td>3</td><td>greatgrandkid1</td><td>a great grandkid</td></tr></table>',
     "select * returns all rows"

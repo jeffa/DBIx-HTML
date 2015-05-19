@@ -10,7 +10,13 @@ use Data::Dumper;
 
 sub connect {
     my $class = shift;
-    my $self = {};
+    my $self = {
+        head        => [],
+        rows        => [],
+        dbh         => undef,
+        sth         => undef,
+        keep_alive  => undef,
+    };
 
     if (UNIVERSAL::isa( $_[0], 'DBI::db' )) {
         # use supplied db handle
@@ -31,16 +37,14 @@ sub do {
 
     carp "can't call do(): no database handle" unless $self->{dbh};
 
-    #TODO: this seems like it can be simplified
     eval {
-        $self->{sth} = UNIVERSAL::isa( $sql,'DBI::st' ) ? $sql : $self->{dbh}->prepare( $sql );
+        $self->{sth} = $self->{dbh}->prepare( $sql );
         $self->{sth}->execute( @$args );
     };
     carp $@ and return undef if $@;
 
     $self->{head} = $self->{sth}{NAME};
     $self->{rows} = $self->{sth}->fetchall_arrayref;
-
     return $self;
 }
 
@@ -48,23 +52,28 @@ sub generate {
     my $self = shift;
     return Spreadsheet::HTML
         ->new( data => [ $self->{head}, @{ $self->{rows} } ] )
-        ->generate( @_ )
+        ->generate( $self->{table_attrs} )
     ;
 }
 
 sub decorate {
     my $self = shift;
+    my %attrs = @_;
 
+    if (my $func = delete $attrs{map_headers}) {
+        $self->{head} = [ map $func->($_), @{ $self->{head} } ];
+    }
+
+    $self->{table_attrs} = {%attrs};
+    return $self;
 }
 
 
 # disconnect database handle if i created it
 sub DESTROY {
 	my $self = shift;
-	unless ($self->{keep_alive}) {
-        if (UNIVERSAL::isa( $self->{dbh}, 'DBI::db' )) {
-            $self->{dbh}->disconnect();
-        }
+	if (!$self->{keep_alive} and UNIVERSAL::isa( $self->{dbh}, 'DBI::db' )) {
+        $self->{dbh}->disconnect();
 	}
 }
 
