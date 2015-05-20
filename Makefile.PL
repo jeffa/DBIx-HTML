@@ -8,15 +8,16 @@ WriteMakefile(
     AUTHOR           => q{Jeff Anderson <jeffa@cpan.org>},
     VERSION_FROM     => 'lib/DBIx/HTML.pm',
     ABSTRACT_FROM    => 'lib/DBIx/HTML.pm',
-    LICENSE          => 'Artistic_2_0',
+    LICENSE          => 'artistic_2',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.006,
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 0,
     },
     BUILD_REQUIRES => {
+        'DBI' => 0,
         'Test::More' => 0,
-        'Spreadsheet::HTML' => '0.04',
+        'Spreadsheet::HTML' => 0,
     },
     PREREQ_PM => { },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
