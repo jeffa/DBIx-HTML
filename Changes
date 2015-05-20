@@ -1,6 +1,6 @@
 Revision history for DBIx-HTML
 
-0.07
+0.07    fixed Makefile; generate() delegates tag attrs
 
 0.06    fixed distro tests/manifest  
 
