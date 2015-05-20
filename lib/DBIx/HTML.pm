@@ -50,24 +50,12 @@ sub do {
 
 sub generate {
     my $self = shift;
+    my %attrs = @_;
     return Spreadsheet::HTML
         ->new( data => [ $self->{head}, @{ $self->{rows} } ] )
-        ->generate( $self->{table_attrs} )
+        ->generate( { %attrs} )
     ;
 }
-
-sub decorate {
-    my $self = shift;
-    my %attrs = @_;
-
-    if (my $func = delete $attrs{filter_header}) {
-        $self->{head} = [ map $func->($_), @{ $self->{head} } ];
-    }
-
-    $self->{table_attrs} = {%attrs};
-    return $self;
-}
-
 
 # disconnect database handle if i created it
 sub DESTROY {
@@ -98,16 +86,14 @@ DBIx::HTML - SQL queries to HTML tables.
         order by foo
     ', [ 'qux' ]);
 
-    $table->decorate( table => { border => 1 } );
-
-    print $table->generate;
+    print $table->generate( table => { border => 1 } );
 
     # stackable method calls:
     print DBIx::HTML
         ->connect( @creds )
         ->do( 'select foo,baz from bar' )
-        ->decorate( table => { border => 1 } )
-        ->generate;
+        ->generate( table => { border => 1 } )
+    ;
 
 =head1 METHODS
 
@@ -120,10 +106,6 @@ Connects to the database. See L<DBI> for how to do that.
 =item do()
 
 Executes the query.
-
-=item decorate()
-
-Specify attributes for the HTML tags in the generated table.
 
 =item generate()
 
