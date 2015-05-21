@@ -6,21 +6,6 @@ See [DBIx::HTML](http://search.cpan.org/dist/DBIx-HTML/)
 and [Spreadsheet::HTML](http://search.cpan.org/dist/Spreadsheet-HTML/)
 for more information.
 
-Installation
-------------
-To install this module, you should use CPAN. A good starting
-place is [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html).
-
-If you truly want to install from this github repo, then
-be sure and create the manifest before you test and install:
-```
-perl Makefile.PL
-make
-make manifest
-make test
-make install
-```
-
 ALPHA RELEASE
 -------------
 While most functionality for this module has been completed,
@@ -47,6 +32,21 @@ print DBIx::HTML
     ->do( 'select foo,baz from bar' )
     ->generate
 ;
+```
+
+Installation
+------------
+To install this module, you should use CPAN. A good starting
+place is [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html).
+
+If you truly want to install from this github repo, then
+be sure and create the manifest before you test and install:
+```
+perl Makefile.PL
+make
+make manifest
+make test
+make install
 ```
 
 Support and Documentation
