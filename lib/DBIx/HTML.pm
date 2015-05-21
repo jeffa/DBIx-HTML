@@ -50,10 +50,9 @@ sub do {
 
 sub generate {
     my $self = shift;
-    my %attrs = @_;
     return Spreadsheet::HTML
         ->new( data => [ $self->{head}, @{ $self->{rows} } ] )
-        ->generate( { %attrs} )
+        ->generate( @_ )
     ;
 }
 
