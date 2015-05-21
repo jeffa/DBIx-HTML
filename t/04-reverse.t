@@ -8,7 +8,7 @@ use Test::More;
 eval "use DBD::CSV";
 plan skip_all => "DBD::CSV required" if $@;
 
-plan tests => 2;
+plan tests => 1;
 
 my $dbh = DBI->connect (
     "dbi:CSV:", undef, undef, {
@@ -23,12 +23,7 @@ my $table = DBIx::HTML
     ->do( 'select * from decorate' )
 ;
 
-is $table->transpose,
+is $table->reverse,
     '<table><tr><td>7</td><td>8</td><td>9</td></tr><tr><td>4</td><td>5</td><td>6</td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><th>col_1</th><th>col_2</th><th>col_3</th></tr></table>',
     "able to transpose table"
-;
-
-is $table->transpose( table => { class => 'foo' } ),
-    '<table class="foo"><tr><td>7</td><td>8</td><td>9</td></tr><tr><td>4</td><td>5</td><td>6</td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><th>col_1</th><th>col_2</th><th>col_3</th></tr></table>',
-    "able to pass table attrs"
 ;
