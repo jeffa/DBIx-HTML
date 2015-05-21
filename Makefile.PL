@@ -17,7 +17,7 @@ WriteMakefile(
     BUILD_REQUIRES => {
         'DBI' => 0,
         'Test::More' => 0,
-        'Spreadsheet::HTML' => 0.06,
+        'Spreadsheet::HTML' => 0.07,
     },
     PREREQ_PM => { },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
