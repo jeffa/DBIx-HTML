@@ -6,7 +6,6 @@ our $VERSION = '0.07';
 use DBI;
 use Carp;
 use Spreadsheet::HTML;
-use Data::Dumper;
 
 sub connect {
     my $class = shift;
@@ -24,7 +23,7 @@ sub connect {
         $self->{keep_alive} = 1;
     } else {
         # create my own db handle
-        eval { $self->{dbh} = DBI->connect(@_) };
+        eval { $self->{dbh} = DBI->connect( @_ ) };
         carp $@ and return undef if $@;
     }
 
