@@ -48,15 +48,15 @@ sub do {
     return $self;
 }
 
-sub generate    { _generator( @_ )->generate  }
-sub portrait    { _generator( @_ )->generate  }
-sub transpose   { _generator( @_ )->transpose }
-sub landscape   { _generator( @_ )->transpose }
-sub reverse     { _generator( @_ )->reverse   }
+sub generate    { _generator( shift )->generate( @_ )  }
+sub portrait    { _generator( shift )->generate( @_ )  }
+sub transpose   { _generator( shift )->transpose( @_ ) }
+sub landscape   { _generator( shift )->transpose( @_ ) }
+sub reverse     { _generator( shift )->reverse( @_ )   }
 
 sub _generator  {
     my $self = shift;
-    return Spreadsheet::HTML->new( data => [ $self->{head}, @{ $self->{rows} } ], @_ );
+    return Spreadsheet::HTML->new( data => [ $self->{head}, @{ $self->{rows} } ] );
  }
 
 
