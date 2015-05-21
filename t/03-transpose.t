@@ -18,22 +18,17 @@ my $dbh = DBI->connect (
     }
 );
 
-my $output = DBIx::HTML
-    ->connect($dbh)
+my $table = DBIx::HTML
+    ->connect( $dbh )
     ->do( 'select * from decorate' )
-    ->transpose
 ;
-is $output,
+
+is $table->transpose,
     '<table><tr><th>col_1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>col_2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>col_3</th><td>3</td><td>6</td><td>9</td></tr></table>',
     "able to transpose table"
 ;
 
-$output = DBIx::HTML
-    ->connect($dbh)
-    ->do( 'select * from decorate' )
-    ->transpose( table => { class => 'foo' } )
-;
-is $output,
+is $table->transpose( table => { class => 'foo' } ),
     '<table class="foo"><tr><th>col_1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>col_2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>col_3</th><td>3</td><td>6</td><td>9</td></tr></table>',
     "able to pass table attrs"
 ;
