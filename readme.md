@@ -58,8 +58,7 @@ perldoc command.
 ```
 perldoc DBIx::HTML
 ```
-You can also look for information at
-[Search CPAN](http://search.cpan.org/dist/DBIx-HTML/)
+You can also find documentation at [metaCPAN](https://metacpan.org/pod/DBIx::HTML).
 
 License and Copyright
 ---------------------
