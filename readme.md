@@ -2,6 +2,7 @@ DBIx-HTML
 =========
 SQL queries to HTML tables.
 
+See [DBIx::HTML](http://search.cpan.org/dist/DBIx-HTML/)
 and [Spreadsheet::HTML](http://search.cpan.org/dist/Spreadsheet-HTML/)
 for more information.
 
