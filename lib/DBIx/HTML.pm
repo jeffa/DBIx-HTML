@@ -74,56 +74,73 @@ __END__
 
 DBIx::HTML - SQL queries to HTML tables.
 
+=head1 THIS IS AN ALPHA RELEASE.
+
+While most functionality for this module has been completed,
+testing has not. This module has a strong dependency on
+L<Spreadsheet::HTML> which currently is also an alpha release.
+
+You are encouraged to try my older L<DBIx::XHTML_Table> during
+the development of this module.
+
 =head1 USAGE
 
     use DBIx::HTML;
 
-    # database credentials - fill in the blanks
-    my @creds = ( $data_source, $usr, $pass );
-    my $table = DBIx::HTML->connect( @creds )
-
-    $table->do('
-        select foo from bar
-        where baz = ?
-        order by foo
-    ', [ 'qux' ]);
-
-    print $table->generate( table => { border => 1 } );
+    my $table = DBIx::HTML->connect( @db_credentials );
+    $table->do( $query );
+    print $table->generate;
 
     # stackable method calls:
     print DBIx::HTML
-        ->connect( @creds )
+        ->connect( @db_credentials )
         ->do( 'select foo,baz from bar' )
-        ->generate( table => { border => 1 } )
+        ->generate
     ;
 
 =head1 METHODS
 
 =over 4
 
-=item connect()
+=item connect( @database_credentials )
 
 Connects to the database. See L<DBI> for how to do that.
+Optionally, create your own database handle and pass it:
 
-=item do()
+  my $dbh = DBI->connect ( @db_creds );
+  my $table = DBIx::HTML->connect( $dbh );
 
-Executes the query.
+  # do stuff and then finally ...
+  $dbh->disconnect;
 
-=item portrait()
+DBIx::HTML will not disconnect your database handle.
 
-=item generate()
+=item do( $sql_query )
+
+Executes the query, fetches the results and stores
+them internally.
+
+=item portrait( key => 'value' )
+
+=item generate( key => 'value' )
 
 Produce and return the HTML table with headers at top.
 
-=item landscape()
+(See L<Spreadsheet::HTML> for available function arguments.)
 
-=item transpose()
+=item landscape( key => 'value' )
+
+=item transpose( key => 'value' )
 
 Produce and return the HTML table with headers at left.
 
-=item reverse()
+(See L<Spreadsheet::HTML> for available function arguments.)
+
+=item reverse( key => 'value' )
 
 Produce and return the HTML table with headers at bottom.
+
+(See L<Spreadsheet::HTML> for available function arguments.)
 
 =back
 
@@ -187,6 +204,18 @@ L<http://cpanratings.perl.org/d/DBIx-HTML>
 =item * Search CPAN
 
 L<http://search.cpan.org/dist/DBIx-HTML/>
+
+=back
+
+=head1 ACKNOWLEDGEMENTS
+
+Thank you very much! :)
+
+=over 4
+
+=item * Neil Bowers
+
+Helped with Makefile.PL suggestions and corrections.
 
 =back
 
