@@ -48,13 +48,17 @@ sub do {
     return $self;
 }
 
-sub generate {
+sub generate    { _generator( @_ )->generate  }
+sub portrait    { _generator( @_ )->generate  }
+sub transpose   { _generator( @_ )->transpose }
+sub landscape   { _generator( @_ )->transpose }
+sub reverse     { _generator( @_ )->reverse   }
+
+sub _generator  {
     my $self = shift;
-    return Spreadsheet::HTML
-        ->new( data => [ $self->{head}, @{ $self->{rows} } ] )
-        ->generate( @_ )
-    ;
-}
+    return Spreadsheet::HTML->new( data => [ $self->{head}, @{ $self->{rows} } ], @_ );
+ }
+
 
 # disconnect database handle if i created it
 sub DESTROY {
@@ -106,9 +110,21 @@ Connects to the database. See L<DBI> for how to do that.
 
 Executes the query.
 
+=item portrait()
+
 =item generate()
 
-Produce and return the HTML table.
+Produce and return the HTML table with headers at top.
+
+=item landscape()
+
+=item transpose()
+
+Produce and return the HTML table with headers at left.
+
+=item reverse()
+
+Produce and return the HTML table with headers at bottom.
 
 =back
 
