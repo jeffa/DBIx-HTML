@@ -51,6 +51,8 @@ sub generate    { _generator( shift )->generate( @_ )  }
 sub portrait    { _generator( shift )->generate( @_ )  }
 sub transpose   { _generator( shift )->transpose( @_ ) }
 sub landscape   { _generator( shift )->transpose( @_ ) }
+sub flip        { _generator( shift )->flip( @_ )      }
+sub mirror      { _generator( shift )->mirror( @_ )    }
 sub reverse     { _generator( shift )->reverse( @_ )   }
 
 sub _generator  {
@@ -134,13 +136,18 @@ Produce and return the HTML table with headers at top.
 
 Produce and return the HTML table with headers at left.
 
-(See L<Spreadsheet::HTML> for available function arguments.)
+=item flip( key => 'value' )
+
+Produce and return the HTML table with headers and data upside down.
+
+=item mirror( key => 'value' )
+
+Produce and return the HTML table with columns rendered right to left.
 
 =item reverse( key => 'value' )
 
-Produce and return the HTML table with headers at bottom.
-
-(See L<Spreadsheet::HTML> for available function arguments.)
+Produce and return the HTML table with headers and data upside
+and columns rendered right to left (combines flip and mirror).
 
 =back
 
