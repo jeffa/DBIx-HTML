@@ -24,11 +24,11 @@ my $table = DBIx::HTML
 ;
 
 is $table->transpose,
-    '<table><tr><th>col_1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>col_2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>col_3</th><td>3</td><td>6</td><td>9</td></tr></table>',
+    '<table><tr><th>Col 1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>Col 2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Col 3</th><td>3</td><td>6</td><td>9</td></tr></table>',
     "able to transpose table"
 ;
 
 is $table->transpose( table => { class => 'foo' } ),
-    '<table class="foo"><tr><th>col_1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>col_2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>col_3</th><td>3</td><td>6</td><td>9</td></tr></table>',
+    '<table class="foo"><tr><th>Col 1</th><td>1</td><td>4</td><td>7</td></tr><tr><th>Col 2</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Col 3</th><td>3</td><td>6</td><td>9</td></tr></table>',
     "able to pass table attrs"
 ;

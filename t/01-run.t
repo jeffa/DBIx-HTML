@@ -4,7 +4,6 @@ use strict;
 use warnings FATAL => 'all';
 use DBIx::HTML;
 use Test::More;
-use Data::Dumper;
 
 eval "use DBD::CSV";
 plan skip_all => "DBD::CSV required" if $@;
@@ -38,48 +37,48 @@ isa_ok $dbh, 'DBI::db', "database still alive before object expires";
 $dbh   = DBI->connect ( @dbi_csv_args );
 $table = DBIx::HTML->connect( $dbh );
 is output( 'select * from test' ),
-    '<table><tr><th>id</th><th>parent</th><th>name</th><th>description</th></tr><tr><td>1</td><td>&nbsp;</td><td>root</td><td>the root</td></tr><tr><td>2</td><td>1</td><td>kid1</td><td>some kid</td></tr><tr><td>3</td><td>1</td><td>kid2</td><td>some other kid</td></tr><tr><td>4</td><td>2</td><td>grandkid1</td><td>a grandkid</td></tr><tr><td>5</td><td>3</td><td>grandkid2</td><td>another grandkid</td></tr><tr><td>6</td><td>3</td><td>greatgrandkid1</td><td>a great grandkid</td></tr></table>',
+    '<table><tr><th>Id</th><th>Parent</th><th>Name</th><th>Description</th></tr><tr><td>1</td><td>&nbsp;</td><td>root</td><td>the root</td></tr><tr><td>2</td><td>1</td><td>kid1</td><td>some kid</td></tr><tr><td>3</td><td>1</td><td>kid2</td><td>some other kid</td></tr><tr><td>4</td><td>2</td><td>grandkid1</td><td>a grandkid</td></tr><tr><td>5</td><td>3</td><td>grandkid2</td><td>another grandkid</td></tr><tr><td>6</td><td>3</td><td>greatgrandkid1</td><td>a great grandkid</td></tr></table>',
     "select * returns all rows"
 ;
 
 is output( 'select id,parent,name,description from test' ),
-    '<table><tr><th>id</th><th>parent</th><th>name</th><th>description</th></tr><tr><td>1</td><td>&nbsp;</td><td>root</td><td>the root</td></tr><tr><td>2</td><td>1</td><td>kid1</td><td>some kid</td></tr><tr><td>3</td><td>1</td><td>kid2</td><td>some other kid</td></tr><tr><td>4</td><td>2</td><td>grandkid1</td><td>a grandkid</td></tr><tr><td>5</td><td>3</td><td>grandkid2</td><td>another grandkid</td></tr><tr><td>6</td><td>3</td><td>greatgrandkid1</td><td>a great grandkid</td></tr></table>',
+    '<table><tr><th>Id</th><th>Parent</th><th>Name</th><th>Description</th></tr><tr><td>1</td><td>&nbsp;</td><td>root</td><td>the root</td></tr><tr><td>2</td><td>1</td><td>kid1</td><td>some kid</td></tr><tr><td>3</td><td>1</td><td>kid2</td><td>some other kid</td></tr><tr><td>4</td><td>2</td><td>grandkid1</td><td>a grandkid</td></tr><tr><td>5</td><td>3</td><td>grandkid2</td><td>another grandkid</td></tr><tr><td>6</td><td>3</td><td>greatgrandkid1</td><td>a great grandkid</td></tr></table>',
     "select all fields returns all rows"
 ;
 
 is_deeply [ output( 'select id from test', 1 ) ],
-    [ map [$_], 'id', 1 .. 6 ],
+    [ map [$_], 'Id', 1 .. 6 ],
     "select id returns only id rows";
 
 is_deeply [ output( 'select parent from test', 1 ) ],
-    [ map [$_], 'parent', $nbsp, 1, 1, 2, 3, 3 ],
+    [ map [$_], 'Parent', $nbsp, 1, 1, 2, 3, 3 ],
     "select parent returns only parent rows";
 
 is_deeply [ output( 'select name from test', 1 ) ],
-    [ map [$_], qw(name root kid1 kid2 grandkid1 grandkid2 greatgrandkid1) ],
+    [ map [$_], qw(Name root kid1 kid2 grandkid1 grandkid2 greatgrandkid1) ],
     "select name returns only name rows";
 
 is_deeply [ output( 'select description from test', 1 ) ],
-    [ map [$_], 'description', 'the root', 'some kid', 'some other kid', 'a grandkid', 'another grandkid', 'a great grandkid' ],
+    [ map [$_], 'Description', 'the root', 'some kid', 'some other kid', 'a grandkid', 'another grandkid', 'a great grandkid' ],
     "select description returns only description rows";
 
 is_deeply [ output( 'select name from test where id = 2', 1 ) ],
-    [ map [$_], qw( name kid1 )],
+    [ map [$_], qw( Name kid1 )],
     "select with where works on one in-place arg";
 
 is_deeply [ output( 'select id from test where name = ?', 1, [ 'kid1' ]  ) ],
-    [ map [$_], qw( id 2 )],
+    [ map [$_], qw( Id 2 )],
     "select with where works on one bind arg";
 
 is_deeply [ output( 'select description from test where name = ? and parent = ?', 1, [ 'kid1', 1 ]  ) ],
-    [ map [$_], 'description', 'some kid' ],
+    [ map [$_], 'Description', 'some kid' ],
     "select with where works on multiple bind args";
 
 # self-joining is not implemented in SQL::Statement
 # so we use an exact copy of our test csv file
 is_deeply [ output( 'select t1.name as child, t2.name as parent from test t1 join test_copy t2 on t1.parent=t2.id', 1 ) ],
     [
-        [ qw( child parent ) ],
+        [ qw( Child Parent ) ],
         [ qw( kid1 root ) ],
         [ qw( kid2 root ) ],
         [ qw( grandkid1 kid1 ) ],

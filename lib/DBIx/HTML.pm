@@ -16,7 +16,10 @@ sub connect {
         dbh         => undef,
         sth         => undef,
         keep_alive  => undef,
-        generator   => Spreadsheet::HTML->new,
+        generator   => Spreadsheet::HTML->new(
+            cache    => 1,        
+            headings => sub { join(' ', map { ucfirst(lc($_)) } split ('_', shift)) }
+        ),
     };
 
     if (UNIVERSAL::isa( $_[0], 'DBI::db' )) {
@@ -53,7 +56,7 @@ sub do {
 sub AUTOLOAD {
     my $self = shift;
     croak "must connect() first" unless ref($self) eq __PACKAGE__;
-    my $method = $AUTOLOAD =~ s/.*:://r;
+    (my $method = $AUTOLOAD) =~ s/.*:://;
     croak "no such method $method for " . ref($self->{generator}) unless $self->{generator}->can( $method );
     return $self->{generator}->$method( @_ );
 } 
@@ -72,16 +75,7 @@ sub DESTROY {
 __END__
 =head1 NAME
 
-DBIx::HTML - SQL queries to HTML tables.
-
-=head1 THIS IS AN ALPHA RELEASE.
-
-While most functionality for this module has been completed,
-testing has not. This module has a strong dependency on
-L<Spreadsheet::HTML> which currently is also an alpha release.
-
-You are encouraged to try my older L<DBIx::XHTML_Table> during
-the development of this module.
+DBIx::HTML - SQL queries to HTML5 tables.
 
 =head1 USAGE
 
@@ -89,20 +83,30 @@ the development of this module.
 
     my $table = DBIx::HTML->connect( @db_credentials );
     $table->do( $query );
-    print $table->generate;
+    print $table->portrait( indent => "\t" );
 
     # stackable method calls:
     print DBIx::HTML
         ->connect( @db_credentials )
         ->do( 'select foo,baz from bar' )
-        ->generate
+        ->landscape( encodes => '<>' )
     ;
+
+=head1 SYNOPSIS
+
+Connect to the database and issue a query. The result will be
+an HTML5 table containing the query results wrapped in <td> tags
+and headings wrapped in <th> tags. Headings values have the first
+character in each word upper cased, with underscores replaced by
+spaces. All automatic settings can be overridden. This module uses
+Spreadsheet::HTML to generate the tables. See L<Spreadsheet::HTML>
+for further documentation on customizing the table output.
 
 =head1 METHODS
 
 =over 4
 
-=item connect( @database_credentials )
+=item C<connect( @database_credentials )>
 
 Connects to the database. See L<DBI> for how to do that.
 Optionally, create your own database handle and pass it:
@@ -115,37 +119,23 @@ Optionally, create your own database handle and pass it:
 
 DBIx::HTML will not disconnect your database handle.
 
-=item do( $sql_query )
+=item C<do( $sql_query )>
 
 Executes the query, fetches the results and stores
 them internally.
 
-=item portrait( key => 'value' )
+=back
 
-=item generate( key => 'value' )
+=head1 SPREADSHEET::HTML METHODS
 
-Produce and return the HTML table with headers at top.
+All methods from Spreadsheet::HTML are delegated. Simply call
+any one of the methods provided and supply your own arguments.
+For example, to group table rows into respective <thead>, <tbody>
+and <tfoot> sections and to remove any headings text formatting:
 
-(See L<Spreadsheet::HTML> for available function arguments.)
+  print $table->generate( tgroups => 1, headings => undef );
 
-=item landscape( key => 'value' )
-
-=item transpose( key => 'value' )
-
-Produce and return the HTML table with headers at left.
-
-=item flip( key => 'value' )
-
-Produce and return the HTML table with headers and data upside down.
-
-=item mirror( key => 'value' )
-
-Produce and return the HTML table with columns rendered right to left.
-
-=item reverse( key => 'value' )
-
-Produce and return the HTML table with headers and data upside
-and columns rendered right to left (combines flip and mirror).
+See L<Spreadsheet::HTML> for full documentation on these methods.
 
 =back
 
@@ -157,11 +147,19 @@ and columns rendered right to left (combines flip and mirror).
 
 =item L<DBIx::XHTML_Table>
 
+The original since 2001. Can handle advanced grouping, individual cell
+value contol, rotating attributes and totals/subtotals.
+
 =back
 
-=head1 AUTHOR
+=head1 THIS IS AN ALPHA RELEASE.
 
-Jeff Anderson, C<< <jeffa at cpan.org> >>
+While most functionality for this module has been completed,
+testing has not. This module has a strong dependency on
+L<Spreadsheet::HTML> which currently is also an alpha release.
+
+You are encouraged to try my older L<DBIx::XHTML_Table> during
+the development of this module.
 
 =head1 BUGS
 
@@ -182,13 +180,15 @@ Please report any bugs or feature requests to
 I will be notified, and then you'll automatically be notified of progress
 on your bug as I make changes.
 
+=head1 GITHUB
+
+The Github project is L<https://github.com/jeffa/DBIx-HTML>
+
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc DBIx::HTML
-
-The Github project is L<https://github.com/jeffa/DBIx-HTML>
 
 You can also look for information at:
 
@@ -223,6 +223,10 @@ Thank you very much! :)
 Helped with Makefile.PL suggestions and corrections.
 
 =back
+
+=head1 AUTHOR
+
+Jeff Anderson, C<< <jeffa at cpan.org> >>
 
 =head1 LICENSE AND COPYRIGHT
 

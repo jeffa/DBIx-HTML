@@ -1,6 +1,8 @@
 Revision history for DBIx-HTML
 
 0.09
+        - auto cache => 1
+        - auto format headers
         - using AUTOLOAD to delegate Spreadsheet::HTML methods
 
 0.08    
