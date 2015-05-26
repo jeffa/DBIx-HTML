@@ -1,7 +1,7 @@
 package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 our $AUTOLOAD;
 
 use DBI;

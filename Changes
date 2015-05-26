@@ -1,5 +1,7 @@
 Revision history for DBIx-HTML
 
+0.10
+
 0.09
         - auto cache => 1
         - auto format headers
