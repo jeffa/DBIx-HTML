@@ -137,8 +137,6 @@ and <tfoot> sections and to remove any headings text formatting:
 
 See L<Spreadsheet::HTML> for full documentation on these methods.
 
-=back
-
 =head1 SEE ALSO
 
 =over 4
