@@ -2,6 +2,7 @@ package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
 our $VERSION = '0.09';
+our $AUTOLOAD;
 
 use DBI;
 use Carp;
@@ -15,6 +16,7 @@ sub connect {
         dbh         => undef,
         sth         => undef,
         keep_alive  => undef,
+        generator   => Spreadsheet::HTML->new,
     };
 
     if (UNIVERSAL::isa( $_[0], 'DBI::db' )) {
@@ -44,27 +46,23 @@ sub do {
 
     $self->{head} = $self->{sth}{NAME};
     $self->{rows} = $self->{sth}->fetchall_arrayref;
+    $self->{generator}{data} = [ $self->{head}, @{ $self->{rows} } ];
     return $self;
 }
 
-sub generate    { _generator( shift )->generate( @_ )  }
-sub portrait    { _generator( shift )->generate( @_ )  }
-sub transpose   { _generator( shift )->transpose( @_ ) }
-sub landscape   { _generator( shift )->transpose( @_ ) }
-sub flip        { _generator( shift )->flip( @_ )      }
-sub mirror      { _generator( shift )->mirror( @_ )    }
-sub reverse     { _generator( shift )->reverse( @_ )   }
-
-sub _generator  {
+sub AUTOLOAD {
     my $self = shift;
-    return Spreadsheet::HTML->new( data => [ $self->{head}, @{ $self->{rows} } ] );
- }
+    croak "must connect() first" unless ref($self) eq __PACKAGE__;
+    my $method = $AUTOLOAD =~ s/.*:://r;
+    croak "no such method $method for " . ref($self->{generator}) unless $self->{generator}->can( $method );
+    return $self->{generator}->$method( @_ );
+} 
 
 
 # disconnect database handle if i created it
 sub DESTROY {
 	my $self = shift;
-	if (!$self->{keep_alive} and UNIVERSAL::isa( $self->{dbh}, 'DBI::db' )) {
+	if (!$self->{keep_alive} and $self->{dbh}->isa( 'DBI::db' )) {
         $self->{dbh}->disconnect();
 	}
 }
