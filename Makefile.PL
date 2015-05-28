@@ -16,7 +16,7 @@ WriteMakefile(
     },
     BUILD_REQUIRES => {
         'Test::More' => 0,
-        'DBD::CSV'   => 0,
+        'DBD::CSV'   => 0.48,
     },
     PREREQ_PM => {
         'DBI' => 0,
