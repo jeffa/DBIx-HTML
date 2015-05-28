@@ -15,11 +15,13 @@ WriteMakefile(
         'ExtUtils::MakeMaker' => 0,
     },
     BUILD_REQUIRES => {
-        'DBI' => 0,
         'Test::More' => 0,
-        'Spreadsheet::HTML' => 0.07,
+        'DBD::CSV'   => 0,
     },
-    PREREQ_PM => { },
+    PREREQ_PM => {
+        'DBI' => 0,
+        'Spreadsheet::HTML' => 0.12,
+    },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'DBIx-HTML-*' },
 );
