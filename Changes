@@ -1,23 +1,35 @@
 Revision history for DBIx-HTML
 
-0.10    - corrected Makefile dependencies
+0.11
+        - 
+0.10
+        - corrected Makefile dependencies
 
-0.09    - auto cache => 1
+0.09
+        - auto cache => 1
         - auto format headers
         - using AUTOLOAD to delegate Spreadsheet::HTML methods
 
-0.08    - able to pass attrs to Spreadsheet::HTML
+0.08
+        - able to pass attrs to Spreadsheet::HTML
 
-0.07    - fixed Makefile; generate() delegates tag attrs
+0.07
+        - fixed Makefile; generate() delegates tag attrs
 
-0.06    - fixed distro tests/manifest  
+0.06
+        - fixed distro tests/manifest  
 
-0.05    - moving install test out of distro
+0.05
+        - moving install test out of distro
 
-0.04    - fixed tardist manifest
+0.04
+        - fixed tardist manifest
 
-0.03    - now stands alone (uses only DBI and Spreadsheet::HTML)
+0.03
+        - now stands alone (uses only DBI and Spreadsheet::HTML)
 
-0.02    - merge DBIx::XHTML and Spreadsheet:HTML
+0.02
+        - merge DBIx::XHTML and Spreadsheet:HTML
 
-0.01    - First version, released on an unsuspecting world.
+0.01
+        - First version, released on an unsuspecting world.
