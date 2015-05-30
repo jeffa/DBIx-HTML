@@ -5,8 +5,8 @@ use warnings FATAL => 'all';
 use DBIx::HTML;
 use Test::More;
 
-eval "use DBD::CSV";
-plan skip_all => "DBD::CSV required" if $@;
+eval "use DBD::CSV 0.48";
+plan skip_all => "DBD::CSV 0.48 required" if $@;
 
 eval "use HTML::TableExtract";
 plan skip_all => "HTML::TableExtract required" if $@;
