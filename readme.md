@@ -1,6 +1,6 @@
 DBIx-HTML
 =========
-SQL queries to HTML tables.
+SQL queries to HTML5 tables.
 
 See [DBIx::HTML](http://search.cpan.org/dist/DBIx-HTML/)
 and [Spreadsheet::HTML](http://search.cpan.org/dist/Spreadsheet-HTML/)
