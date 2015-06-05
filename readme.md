@@ -24,13 +24,13 @@ use DBIx::HTML;
 
 my $table = DBIx::HTML->connect( @db_credentials );
 $table->do( $query );
-print $table->generate;
+print $table->portrait;
 
 # stackable method calls:
 print DBIx::HTML
     ->connect( @db_credentials )
     ->do( 'select foo,baz from bar' )
-    ->generate
+    ->portrait
 ;
 ```
 

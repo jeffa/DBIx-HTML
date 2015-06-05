@@ -19,7 +19,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'DBI' => 0,
-        'Spreadsheet::HTML' => 0.12,
+        'Spreadsheet::HTML' => 0.17,
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'DBIx-HTML-*' },
