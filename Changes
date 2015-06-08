@@ -1,5 +1,7 @@
 Revision history for DBIx-HTML
 
+0.12
+
 0.11
         - depend on minimum Spreadsheet::HTML version of 0.17
         - tests require DBD::CSV 0.48 but build does not
