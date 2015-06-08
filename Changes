@@ -1,6 +1,7 @@
 Revision history for DBIx-HTML
 
 0.12
+        - removed tests that used deprecated Spreadsheet::HTML methods
 
 0.11
         - depend on minimum Spreadsheet::HTML version of 0.17

@@ -133,9 +133,10 @@ any one of the methods provided and supply your own arguments.
 For example, to group table rows into respective <thead>, <tbody>
 and <tfoot> sections and to wrap headings with <td> instead of <tr>:
 
-  print $table->portrait( tgroups => 1, headings => undef );
+  print $table->portrait( tgroups => 1, matrix => 1 );
 
-See L<Spreadsheet::HTML> for full documentation on these methods.
+See L<Spreadsheet::HTML> for full documentation on these methods and
+the named parameters they accept as arguments.
 
 =head1 SEE ALSO
 
