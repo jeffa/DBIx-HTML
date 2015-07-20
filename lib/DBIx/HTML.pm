@@ -32,7 +32,7 @@ sub connect {
         carp $@ and return undef if $@;
     }
 
-	return bless $self, $class;
+    return bless $self, $class;
 }
 
 sub do {
@@ -64,10 +64,10 @@ sub AUTOLOAD {
 
 # disconnect database handle if i created it
 sub DESTROY {
-	my $self = shift;
-	if (!$self->{keep_alive} and $self->{dbh}->isa( 'DBI::db' )) {
+    my $self = shift;
+    if (!$self->{keep_alive} and $self->{dbh}->isa( 'DBI::db' )) {
         $self->{dbh}->disconnect();
-	}
+    }
 }
 
 
