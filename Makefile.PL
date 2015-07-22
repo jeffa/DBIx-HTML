@@ -19,8 +19,17 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'DBI' => 0,
-        'Spreadsheet::HTML' => 0.17,
+        'Spreadsheet::HTML' => 0.38,
     },
+    (! eval { ExtUtils::MakeMaker->VERSION(6.46) } ? () :
+        (META_ADD => {
+            resources => {
+                homepage   => 'https://github.com/jeffa/DBIx-HTML',
+                repository => 'https://github.com/jeffa/DBIx-HTML.git',
+                bugtracker => 'https://github.com/jeffa/DBIx-HTML/issues',
+            },
+        })
+    ),
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'DBIx-HTML-*' },
 );
