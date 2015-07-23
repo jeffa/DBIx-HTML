@@ -1,8 +1,10 @@
 Revision history for DBIx-HTML
 
-0.12
+0.13
     - added github info to Makefile
     - depend on minimum Spreadsheet::HTML version of 0.37
+
+0.12
     - removed tests that used deprecated Spreadsheet::HTML methods
 
 0.11
