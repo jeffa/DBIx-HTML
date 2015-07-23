@@ -79,9 +79,9 @@ DBIx::HTML - SQL queries to HTML5 tables.
 
     use DBIx::HTML;
 
-    my $table = DBIx::HTML->connect( @db_credentials );
-    $table->do( $query );
-    print $table->portrait( indent => "\t" );
+    my $generator = DBIx::HTML->connect( @db_credentials );
+    $generator->do( $query );
+    print $generator->portrait( indent => "\t" );
 
     # stackable method calls:
     print DBIx::HTML
@@ -100,7 +100,7 @@ spaces. All automatic settings can be overridden. For example,
 if you do not want the headings to be automatically styled, you
 can remove them like so:
 
-  print $table->generate( headings => undef );
+  print $generator->portrait( headings => undef );
 
 This module uses Spreadsheet::HTML to generate the tables. See
 L<Spreadsheet::HTML> for further documentation on customizing
@@ -116,7 +116,7 @@ Connects to the database. See L<DBI> for how to do that.
 Optionally, create your own database handle and pass it:
 
   my $dbh = DBI->connect ( @db_creds );
-  my $table = DBIx::HTML->connect( $dbh );
+  my $generator = DBIx::HTML->connect( $dbh );
 
   # do stuff and then finally ...
   $dbh->disconnect;
@@ -137,7 +137,11 @@ any one of the methods provided and supply your own arguments.
 For example, to group table rows into respective <thead>, <tbody>
 and <tfoot> sections and to wrap headings with <td> instead of <th>:
 
-  print $table->generate( tgroups => 1, matrix => 1 );
+  print $generator->portrait( tgroups => 1, matrix => 1 );
+
+Or have some fun:
+
+  print $generator->conway;
 
 See L<Spreadsheet::HTML> for full documentation on these methods and
 the named parameters they accept as arguments.
@@ -147,6 +151,8 @@ the named parameters they accept as arguments.
 =over 4
 
 =item L<Spreadsheet::HTML>
+
+The engine for this module.
 
 =item L<DBIx::XHTML_Table>
 
