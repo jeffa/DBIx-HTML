@@ -1,6 +1,7 @@
 Revision history for DBIx-HTML
 
 0.14
+    - updated slug
 
 0.13
     - added github info to Makefile

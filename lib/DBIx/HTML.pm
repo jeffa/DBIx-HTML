@@ -73,9 +73,9 @@ sub DESTROY {
 __END__
 =head1 NAME
 
-DBIx::HTML - SQL queries to HTML5 tables.
+DBIx::HTML - Just another HTML table generating DBI extension.
 
-=head1 USAGE
+=head1 SYNOPSIS
 
     use DBIx::HTML;
 
@@ -96,21 +96,28 @@ DBIx::HTML - SQL queries to HTML5 tables.
     # rotating attributes:
     print $generator->portrait( tr => { class => [qw( odd even )] } );
 
-=head1 SYNOPSIS
+=head1 DESCRIPTION
+
+Generate HTML tables from database queries (HTML4, XHTML and HTML5).
+Can generate landscape and other rotated views, Handsontable tables,
+checkboard patterns, and can create animations of cell values and
+backgrounds via jQuery.
 
 Connect to the database and issue a query. The result will be
-an HTML5 table containing the query results wrapped in <td> tags
-and headings wrapped in <th> tags. Headings values have the first
-character in each word upper cased, with underscores replaced by
-spaces. All automatic settings can be overridden. For example,
-if you do not want the headings to be automatically styled, you
-can remove them like so:
+an HTML HTML5 or XHTML table containing the query results wrapped
+in <td> tags and headings wrapped in <th> tags. Headings values have
+the first character in each word upper cased, with underscores replaced
+by spaces. All automatic settings can be overridden. For example, if
+you do not want the headings to be automatically styled, you can remove
+them like so:
 
   print $generator->portrait( headings => undef );
 
 This module uses Spreadsheet::HTML to generate the tables. See
 L<Spreadsheet::HTML> for further documentation on customizing
 the table output.
+
+THIS MODULE IS AN ALPHA RELEASE! Although we are very close to BETA.
 
 =head1 METHODS
 
