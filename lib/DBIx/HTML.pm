@@ -131,9 +131,9 @@ them internally.
 All methods from Spreadsheet::HTML are delegated. Simply call
 any one of the methods provided and supply your own arguments.
 For example, to group table rows into respective <thead>, <tbody>
-and <tfoot> sections and to wrap headings with <td> instead of <tr>:
+and <tfoot> sections and to wrap headings with <td> instead of <th>:
 
-  print $table->portrait( tgroups => 1, matrix => 1 );
+  print $table->generate( tgroups => 1, matrix => 1 );
 
 See L<Spreadsheet::HTML> for full documentation on these methods and
 the named parameters they accept as arguments.
@@ -146,8 +146,8 @@ the named parameters they accept as arguments.
 
 =item L<DBIx::XHTML_Table>
 
-The original since 2001. Can handle advanced grouping, individual cell
-value contol, rotating attributes and totals/subtotals.
+The predecessor to DBIx::HTML. If you need to generate total
+and subtotal rows, take a look at DBIx::XHTML_Table.
 
 =back
 
