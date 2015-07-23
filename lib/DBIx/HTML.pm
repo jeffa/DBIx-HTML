@@ -17,7 +17,7 @@ sub connect {
         sth         => undef,
         keep_alive  => undef,
         generator   => Spreadsheet::HTML->new(
-            cache    => 1,        
+            cache    => 1,
             headings => sub { join(' ', map { ucfirst(lc($_)) } split ('_', shift)) }
         ),
     };
@@ -81,14 +81,20 @@ DBIx::HTML - SQL queries to HTML5 tables.
 
     my $generator = DBIx::HTML->connect( @db_credentials );
     $generator->do( $query );
-    print $generator->portrait( indent => "\t" );
+
+    # supports mulitple orientations
+    print $generator->portrait;
+    print $generator->landscape;
 
     # stackable method calls:
     print DBIx::HTML
         ->connect( @db_credentials )
         ->do( 'select foo,baz from bar' )
-        ->landscape( encodes => '<>' )
+        ->landscape
     ;
+
+    # rotating attributes:
+    print $generator->portrait( tr => { class => [qw( odd even )] } );
 
 =head1 SYNOPSIS
 
@@ -125,8 +131,7 @@ DBIx::HTML will not disconnect your database handle.
 
 =item C<do( $sql_query )>
 
-Executes the query, fetches the results and stores
-them internally.
+Executes the query, fetches the results and stores them internally.
 
 =back
 
@@ -165,7 +170,8 @@ and subtotal rows, take a look at DBIx::XHTML_Table.
 
 While most functionality for this module has been completed,
 testing has not. This module has a strong dependency on
-L<Spreadsheet::HTML> which currently is also an alpha release.
+L<Spreadsheet::HTML> which although nearly complete, is also 
+currently an alpha release.
 
 You are encouraged to try my older L<DBIx::XHTML_Table> during
 the development of this module.
