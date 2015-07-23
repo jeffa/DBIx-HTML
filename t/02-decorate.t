@@ -12,7 +12,7 @@ plan skip_all => "DBD::CSV 0.48 required" if $@;
 eval "use HTML::TableExtract";
 plan skip_all => "HTML::TableExtract required" if $@;
 
-plan tests => 4;
+plan tests => 5;
 
 my $dbh = DBI->connect (
     "dbi:CSV:", undef, undef, {
@@ -41,6 +41,11 @@ is output( 'select * from decorate', { td => { class => 'foo' } } ),
 is output( 'select * from decorate', { th => { class => 'foo' } } ),
     '<table><tr><th class="foo">Col 1</th><th class="foo">Col 2</th><th class="foo">Col 3</th></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr><tr><td>7</td><td>8</td><td>9</td></tr></table>',
     "able to add attrs to <th>"
+;
+
+is output( 'select * from decorate', { headings => undef } ),
+    '<table><tr><th>col_1</th><th>col_2</th><th>col_3</th></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr><tr><td>7</td><td>8</td><td>9</td></tr></table>',
+    "able to override headings"
 ;
 
 

@@ -61,7 +61,6 @@ sub AUTOLOAD {
     return $self->{generator}->$method( @_ );
 } 
 
-
 # disconnect database handle if i created it
 sub DESTROY {
     my $self = shift;
@@ -69,7 +68,6 @@ sub DESTROY {
         $self->{dbh}->disconnect();
     }
 }
-
 
 1;
 __END__
@@ -98,9 +96,15 @@ Connect to the database and issue a query. The result will be
 an HTML5 table containing the query results wrapped in <td> tags
 and headings wrapped in <th> tags. Headings values have the first
 character in each word upper cased, with underscores replaced by
-spaces. All automatic settings can be overridden. This module uses
-Spreadsheet::HTML to generate the tables. See L<Spreadsheet::HTML>
-for further documentation on customizing the table output.
+spaces. All automatic settings can be overridden. For example,
+if you do not want the headings to be automatically styled, you
+can remove them like so:
+
+  print $table->generate( headings => undef );
+
+This module uses Spreadsheet::HTML to generate the tables. See
+L<Spreadsheet::HTML> for further documentation on customizing
+the table output.
 
 =head1 METHODS
 
