@@ -82,7 +82,7 @@ DBIx::HTML - Just another HTML table generating DBI extension.
     my $generator = DBIx::HTML->connect( @db_credentials );
     $generator->do( $query );
 
-    # supports mulitple orientations
+    # supports multiple orientations
     print $generator->portrait;
     print $generator->landscape;
 
