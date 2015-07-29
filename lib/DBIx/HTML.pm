@@ -113,6 +113,9 @@ them like so:
 
   print $generator->portrait( headings => undef );
 
+  # or add your own styling
+  print $generator->portrait( headings => sub { uc shift } );
+
 This module uses Spreadsheet::HTML to generate the tables. See
 L<Spreadsheet::HTML> for further documentation on customizing
 the table output.
@@ -136,9 +139,9 @@ Optionally, create your own database handle and pass it:
 
 DBIx::HTML will not disconnect your database handle.
 
-=item C<do( $sql_query )>
+=item C<do( $query )>
 
-Executes the query, fetches the results and stores them internally.
+Executes the SQL query, fetches the results and stores them internally.
 
 =back
 
@@ -147,9 +150,13 @@ Executes the query, fetches the results and stores them internally.
 All methods from Spreadsheet::HTML are delegated. Simply call
 any one of the methods provided and supply your own arguments.
 For example, to group table rows into respective <thead>, <tbody>
-and <tfoot> sections and to wrap headings with <td> instead of <th>:
+and <tfoot> sections:
 
-  print $generator->portrait( tgroups => 1, matrix => 1 );
+  print $generator->portrait( tgroups => 1 );
+
+Or perhaps you want to wrap headings with <td> instead of <th>:
+
+  print $generator->portrait( matrix => 1 );
 
 Or have some fun:
 
