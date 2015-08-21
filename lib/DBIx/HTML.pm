@@ -17,8 +17,7 @@ sub connect {
         sth         => undef,
         keep_alive  => undef,
         generator   => Spreadsheet::HTML->new(
-            cache    => 1,
-            headings => sub { join(' ', map { ucfirst(lc($_)) } split ('_', shift)) }
+            headings => sub { join(' ', map { ucfirst(lc($_)) } split ('_', shift || '')) }
         ),
     };
 
