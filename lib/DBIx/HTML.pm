@@ -28,7 +28,7 @@ sub connect {
     } else {
         # create my own db handle
         eval { $self->{dbh} = DBI->connect( @_ ) };
-        carp $@ and return undef if $@;
+        croak $@ and return undef if $@;
     }
 
     return bless $self, $class;
@@ -38,13 +38,13 @@ sub do {
     my $self = shift;
     my ($sql, $args) = @_;
 
-    carp "can't call do(): no database handle" unless $self->{dbh};
+    croak "can't call do(): no database handle" unless $self->{dbh};
 
     eval {
         $self->{sth} = $self->{dbh}->prepare( $sql );
         $self->{sth}->execute( @$args );
     };
-    carp $@ and return undef if $@;
+    croak $@ and return undef if $@;
 
     $self->{head} = $self->{sth}{NAME};
     $self->{rows} = $self->{sth}->fetchall_arrayref;
