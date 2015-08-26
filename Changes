@@ -2,6 +2,7 @@ Revision history for DBIx-HTML
 
 0.16
     - replaced crap with croak where applicable
+    - require minimum Spreadsheet::HTML v0.43
 
 0.15
     - more tests (ensure presets work)
