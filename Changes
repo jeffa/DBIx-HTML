@@ -1,5 +1,8 @@
 Revision history for DBIx-HTML
 
+1.01
+    - fix 1.00 tarball name mistake
+
 1.00
     - replace AUTLOAD with literal subs
     - replaced carp with croak where applicable
