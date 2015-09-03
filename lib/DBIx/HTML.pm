@@ -1,7 +1,7 @@
 package DBIx::HTML;
 use strict;
 use warnings FATAL => 'all';
-our $VERSION = '0.16';
+our $VERSION = '1.00';
 our $AUTOLOAD;
 
 use DBI;
@@ -119,8 +119,6 @@ This module uses Spreadsheet::HTML to generate the tables. See
 L<Spreadsheet::HTML> for further documentation on customizing
 the table output.
 
-THIS MODULE IS AN ALPHA RELEASE! Although we are very close to BETA.
-
 =head1 METHODS
 
 =over 4
@@ -161,7 +159,7 @@ Or have some fun:
 
   print $generator->conway;
 
-See L<Spreadsheet::HTML> for full documentation on these methods and
+See L<Spreadsheet::HTML> for full documentation for these methods and
 the named parameters they accept as arguments.
 
 =head1 SEE ALSO
@@ -174,22 +172,11 @@ The engine for this module.
 
 =item L<DBIx::XHTML_Table>
 
-The predecessor to DBIx::HTML. If you need to generate total
-and subtotal rows, take a look at DBIx::XHTML_Table.
+The predecessor to DBIx::HTML.
 
 =back
 
-=head1 THIS IS AN ALPHA RELEASE.
-
-While most functionality for this module has been completed,
-testing has not. This module has a strong dependency on
-L<Spreadsheet::HTML> which although nearly complete, is also 
-currently an alpha release.
-
-You are encouraged to try my older L<DBIx::XHTML_Table> during
-the development of this module.
-
-=head1 BUGS
+=head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to
 
@@ -208,15 +195,13 @@ Please report any bugs or feature requests to
 I will be notified, and then you'll automatically be notified of progress
 on your bug as I make changes.
 
-=head1 GITHUB
-
-The Github project is L<https://github.com/jeffa/DBIx-HTML>
-
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
     perldoc DBIx::HTML
+
+The Github project is L<https://github.com/jeffa/DBIx-HTML>
 
 You can also look for information at:
 
