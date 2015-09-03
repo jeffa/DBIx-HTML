@@ -149,7 +149,7 @@ any one of the methods provided and supply your own arguments.
 For example, to group table rows into respective <thead>, <tbody>
 and <tfoot> sections:
 
-  print $generator->portrait( tgroups => 1 );
+  print $generator->portrait( tgroups => 2 ); # why 2? answer in the docs!
 
 Or perhaps you want to wrap headings with <td> instead of <th>:
 
