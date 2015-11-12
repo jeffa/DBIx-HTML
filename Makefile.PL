@@ -19,7 +19,7 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'DBI' => 0,
-        'Spreadsheet::HTML' => 1.02,
+        'Spreadsheet::HTML' => 1.08,
     },
     (! eval { ExtUtils::MakeMaker->VERSION(6.46) } ? () :
         (META_ADD => {

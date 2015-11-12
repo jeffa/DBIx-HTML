@@ -41,4 +41,4 @@ ok $table->conway,                  "conway";
 ok $table->maze,                    "maze";
 ok $table->chess,                   "chess";
 ok $table->checkerboard,            "checkerboard";
-ok $table->animate,                 "banner";
+ok $table->scroll,                  "scroll";
