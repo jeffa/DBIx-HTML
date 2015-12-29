@@ -1,6 +1,7 @@
 Revision history for DBIx-HTML
 
 1.02
+    - update copyright date
     - fix bug tracker location
     - fixed test s/animate/scroll/
     - require minimum Spreadsheet::HTML v1.11
