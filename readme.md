@@ -6,17 +6,6 @@ See [DBIx::HTML](http://search.cpan.org/dist/DBIx-HTML/)
 and [Spreadsheet::HTML](http://search.cpan.org/dist/Spreadsheet-HTML/)
 for more information.
 
-ALPHA RELEASE
--------------
-While most functionality for this module has been completed,
-testing has not. This module has a strong dependency on
-[Spreadsheet:HTML](http://search.cpan.org/dist/Spreadsheet-HTML/)
-which currently is also an alpha release.
-(https://github.com/jeffa/Spreadsheet-HTML)
-
-See [DBIx::XHTML_Table](http://search.cpan.org/dist/DBIx-XHTML_Table/)
-if you need a production ready solution and check back soon.
-
 Synopsis
 --------
 ```perl
