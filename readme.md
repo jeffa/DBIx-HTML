@@ -14,7 +14,7 @@ use DBIx::HTML;
 my $generator = DBIx::HTML->connect( @db_credentials );
 $generator->do( $query );
 
-# supports mulitple orientations
+# supports multiple orientations
 print $generator->portrait;
 print $generator->landscape;
 
