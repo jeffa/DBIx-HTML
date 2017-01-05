@@ -1,6 +1,8 @@
 Revision history for DBIx-HTML
 
 1.03
+    - update copyright date
+    - require minimum Spreadsheet::HTML v1.20
 
 1.02
     - update copyright date
