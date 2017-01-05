@@ -11,26 +11,20 @@ use Spreadsheet::HTML;
 sub connect {
     my $class = shift;
     my $self = {
-        head        => [],
-        rows        => [],
-        dbh         => undef,
-        sth         => undef,
-        keep_alive  => undef,
-        generator   => Spreadsheet::HTML->new(
-            headings => sub { join(' ', map { ucfirst(lc($_)) } split ('_', shift || '')) }
+        your_db   => UNIVERSAL::isa( $_[0], 'DBI::db' ),
+        generator => Spreadsheet::HTML->new(
+            headings => sub { 
+                join(' ', map { ucfirst(lc($_)) } split ('_', shift || ''))
+            }
         ),
     };
 
-    if (UNIVERSAL::isa( $_[0], 'DBI::db' )) {
-        # use supplied db handle
-        $self->{dbh}        = $_[0];
-        $self->{keep_alive} = 1;
-    } else {
-        # create my own db handle
-        eval { $self->{dbh} = DBI->connect( @_ ) };
+    unless ($self->{your_db}) {
+        eval { $_[0] = DBI->connect( @_ ) };
         croak $@ and return undef if $@;
     }
 
+    $self->{dbh} = $_[0];
     return bless $self, $class;
 }
 
@@ -46,9 +40,7 @@ sub do {
     };
     croak $@ and return undef if $@;
 
-    $self->{head} = $self->{sth}{NAME};
-    $self->{rows} = $self->{sth}->fetchall_arrayref;
-    $self->{generator}{data} = [ $self->{head}, @{ $self->{rows} } ];
+    $self->{generator}{data} = [ $self->{sth}{NAME}, @{ $self->{sth}->fetchall_arrayref } ];
     return $self;
 }
 
@@ -60,10 +52,9 @@ sub AUTOLOAD {
     return $self->{generator}->$method( @_ );
 } 
 
-# disconnect database handle if i created it
 sub DESTROY {
     my $self = shift;
-    if (!$self->{keep_alive} and $self->{dbh}->isa( 'DBI::db' )) {
+    if (!$self->{your_db} and $self->{dbh}->isa( 'DBI::db' )) {
         $self->{dbh}->disconnect();
     }
 }
